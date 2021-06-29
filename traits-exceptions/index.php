@@ -25,12 +25,12 @@ class Pc
         $this->modello = $modello;
         $this->caratteristiche = $caratteristiche;
         $this->prezzoFornitore = $prezzoFornitore;
-        $this->prezzoVendita = $prezzoVendita;
+        $this->prezzoVendita = $this->prezzoFornitore += $this->calcPrezzo($prezzoFornitore);
     }
 
-    function calcPrezzo()
+    function calcPrezzo(float $prezzoFornitore)
     {
-        return $this->prezzoVendita += $this->prezzoFornitore * 30 / 100;
+        return $this->prezzoFornitore * 30 / 100;
     }
 
     function getPrezzo()
@@ -46,7 +46,7 @@ $pc01 = new Pc('asus','yserie',['16gb ram','1tb ssd','i7'],499.99,600);
 
 
 var_dump($pc01->getPrezzo());
-
+var_dump($pc01->calcPrezzo($prezzoFornitore));
 class Schermo extends Pc
 {
     protected $dimensioni;
