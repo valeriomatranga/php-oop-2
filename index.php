@@ -29,6 +29,27 @@ class Product
     {
        return $this->price -= $this->price * $this->discount / 100;
     }
+
+    function getName()
+    {
+        return $this->name;
+    }
+    function getDesc()
+    {
+        return $this->desc;
+    }
+    function getPrice()
+    {
+        return $this->price;
+    }
+    function getDiscount()
+    {
+        return $this->discount;
+    }
+    function getQty()
+    {
+        return $this->qty;
+    }
 }
 
 class Tv extends Product
@@ -92,16 +113,39 @@ $p1234 = new Premium('Luigi','Rossi','Luigi-rs@gmail.com','luigino','verde','sup
 
 
 /* qui visioniamo gli oggetti definiti in precedenza  */
-var_dump($xbox);        
-var_dump($tv75swdg32);
-var_dump($u1234);
-var_dump($p1234);
+//var_dump($xbox);        
+//var_dump($tv75swdg32);
+//var_dump($u1234);
+//var_dump($p1234);
 
-var_dump($u1234->username); //e possibbile visionarlo perche e in pubblic
+//var_dump($u1234->username); //e possibbile visionarlo perche e in pubblic
 
-var_dump($u1234->getPassword()); // e stato possibile visionarlo anche se in pubblic tramite la funzione getPassword
+//var_dump($u1234->getPassword()); // e stato possibile visionarlo anche se in pubblic tramite la funzione getPassword
 
-var_dump($xbox->calcDiscount()); // qui verifichiamo lo sconto applicato
+//var_dump($xbox->calcDiscount()); // qui verifichiamo lo sconto applicato
 
-var_dump($tv75swdg32->calcDiscount()); // qui verifichiamo il fattore ereditarieta anche per le function
+//var_dump($tv75swdg32->calcDiscount()); // qui verifichiamo il fattore ereditarieta anche per le function
+?>
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <h2>productc</h2>
+        <h3><?php echo $xbox->getName()?></h3>
+        <p>Descrizione: <?php echo $xbox->getDesc()?></p>
+        <p>Prezzo: <?php echo $xbox->getPrice()?> euro</p>
+        <p>Sconto: <?php echo $xbox->getDiscount()?>%</p>
+        <p>Residui Magazzino: <?php echo $xbox->getQty()?> Pz</p>
+    </div>
+
+</body>
+</html>

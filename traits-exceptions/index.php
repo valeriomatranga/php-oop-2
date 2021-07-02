@@ -10,6 +10,9 @@ usate il try/catch per gestire il la richiesta e mostrare all'utente un messaggi
 -->
 <?php 
 
+ error_reporting(E_ALL);
+ ini_set("display_errors", 1);
+
 class Pc
 {
     protected $marca;
@@ -19,18 +22,21 @@ class Pc
     protected $prezzoVendita;
 
 
-    function __construct(string $marca, string $modello, array $caratteristiche,float $prezzoFornitore, float $prezzoVendita) 
+    function __construct(string $marca, string $modello, array $caratteristiche,float $prezzoFornitore, float $prezzoVendita = 0) 
     {
         $this->marca = $marca;
         $this->modello = $modello;
         $this->caratteristiche = $caratteristiche;
         $this->prezzoFornitore = $prezzoFornitore;
-        $this->prezzoVendita = $this->prezzoFornitore += $this->calcPrezzo($prezzoFornitore);
+        $this->prezzoVendita = $this->calcPrezzo($prezzoFornitore, $prezzoVendita);
     }
 
-    function calcPrezzo(float $prezzoFornitore)
+    function calcPrezzo(float $prezzoFornitore, float $prezzoVendita)
     {
-        return $this->prezzoFornitore * 30 / 100;
+        if(!empty($prezzoVendita)) {
+            return $prezzoVendita;
+        }
+        return  $prezzoFornitore + $prezzoFornitore * 30 / 100;
     }
 
     function getPrezzo()
@@ -38,24 +44,40 @@ class Pc
        return $this->prezzoVendita;
     }
 
+    function getForn()
+    {
+        return $this->prezzoFornitore;
+    }
+
 
 }
 
-$pc01 = new Pc('asus','yserie',['16gb ram','1tb ssd','i7'],499.99,600);
-//$pc01 = new Pc('asus','yserie',['16gb ram','1tb ssd','i7'],499.99,calcPrezzo());
+$pc01 = new Pc('asus','yserie',['16gb ram','1tb ssd','i7'], 499.99);
 
+//var_dump($pc01->getPrezzo());
+//var_dump($pc01->getForn());
 
-var_dump($pc01->getPrezzo());
-var_dump($pc01->calcPrezzo($prezzoFornitore));
 class Schermo extends Pc
 {
     protected $dimensioni;
     protected $classEnerg;
 
-    function __construct(string $marca, string $modello, array $caratteristiche, float $prezzoFornitore, float $prezzoVendita, float $dimensioni, string $classEnerg) 
+    function __construct(string $marca, string $modello, array $caratteristiche, float $prezzoFornitore, float $prezzoVendita = 0, float $dimensioni, string $classEnerg) 
     {
         parent::__construct($marca, $modello, $caratteristiche, $prezzoFornitore, $prezzoVendita);
         $this->dimensioni = $dimensioni;
         $this->classEnerg = $classEnerg;
     }
+
+    function calcPrezzo(float $prezzoFornitore, float $prezzoVendita)
+    {
+        if(!empty($prezzoVendita)) {
+            return $prezzoVendita;
+        }
+        return  $prezzoFornitore + $prezzoFornitore * 20 / 100;
+    }
 }
+
+$sh01 = new Schermo('lg','27uhd500',['4k','risposta 1MLs','300hz'],299.99, 0,27,'a++');
+
+//var_dump($sh01->getPrezzo());
